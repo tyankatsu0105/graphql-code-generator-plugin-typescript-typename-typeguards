@@ -8,5 +8,5 @@ export const plugin: PluginFunction<
 > = (schema, documents, config) => {
   console.log({ config, documents, schema });
 
-  return "Hello";
+  return "type T = string;";
 };

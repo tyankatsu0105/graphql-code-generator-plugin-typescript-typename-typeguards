@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vitest",
     "dev": "onchange 'src/**/*.ts' -- npm run build",
-    "build": "tsc"
+    "build": "tsc",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
   "devDependencies": {
     "@graphql-codegen/plugin-helpers": "5.0.1",
     "@graphql-codegen/visitor-plugin-common": "4.0.1",
+    "@graphql-tools/graphql-file-loader": "8.0.0",
+    "@graphql-tools/load": "8.0.0",
     "@types/node": "20.4.10",
     "@typescript-eslint/eslint-plugin": "6.3.0",
     "@typescript-eslint/parser": "6.3.0",
