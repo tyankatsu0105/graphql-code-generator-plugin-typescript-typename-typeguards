@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "NODE_ENV=production  graphql-codegen --config codegen.ts"
   },
   "keywords": [],
   "author": "tyankatsu <frips.ryilsufupe+dev@gmail.com> (https://tyankatsu.com/)",
