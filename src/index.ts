@@ -9,19 +9,26 @@ export const plugin: PluginFunction<
   Types.PluginOutput
 > = (schema) => {
   const typeMap = schema.getTypeMap();
-  const typeNames = Object.keys(typeMap);
+  const allTypeNames = Object.keys(typeMap);
 
-  const result = typeNames
+  const getTypeNames = allTypeNames.filter((typeName) => {
+    const type = typeMap[typeName];
+
+    return (
+      !isScalarType(type) &&
+      !isBuiltInScalar(typeName) &&
+      !isDoubleUnderline(typeName)
+    );
+  });
+
+  const unionTypeName = getTypeNames
+    .map((typeName) => `'${typeName}'`)
+    .join(" | ");
+  const result = getTypeNames
     .map((typeName) => {
-      const type = typeMap[typeName];
-      if (
-        isScalarType(type) ||
-        isBuiltInScalar(typeName) ||
-        isDoubleUnderline(typeName)
-      )
-        return;
+      console.log({ typeName });
 
-      return `export const is${typeName} = (field: { __typename?: string; }): field is ${typeName} => field.__typename === '${typeName}';`;
+      return `export const is${typeName} = (field: { __typename?: ${unionTypeName}; }): field is ${typeName} => field.__typename === '${typeName}';`;
     })
     .filter(Boolean)
     .join("\n");

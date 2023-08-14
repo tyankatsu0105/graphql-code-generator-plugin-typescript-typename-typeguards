@@ -1,2 +1,3 @@
 __test__/cases/**/*.*
 !__test__/cases/**/*.test.ts
+dist/

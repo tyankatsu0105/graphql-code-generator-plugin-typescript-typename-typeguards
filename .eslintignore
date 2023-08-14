@@ -1,1 +1,4 @@
 .eslintrc.js
+__test__/cases/**/*.*
+!__test__/cases/**/*.test.ts
+dist/
