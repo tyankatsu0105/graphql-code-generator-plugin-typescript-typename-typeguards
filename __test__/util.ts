@@ -1,11 +1,10 @@
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import { loadSchemaSync } from "@graphql-tools/load";
+import { readFileSync } from "fs";
 import { join } from "path";
+import { expect, it } from "vitest";
 
 import { plugin } from "../src/index";
-
-import { it, expect } from "vitest";
-import { readFileSync } from "fs";
 
 /**
  * @example
@@ -46,7 +45,7 @@ export const createPluginTester = (dirname: typeof __dirname) => {
        * @default {}
        */
       config?: Parameters<typeof plugin>[2];
-    },
+    }
   ) => {
     it(testcase, () => {
       const schemaPath = params?.filePath?.schema ?? "schema.graphql";

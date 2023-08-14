@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["sandbox", "__test__"],
+  "compilerOptions": {
+    "rootDir": "./src" /* Specify the root folder within your source files. */
+  }
+}

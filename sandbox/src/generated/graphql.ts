@@ -118,5 +118,3 @@ export type QueryPokemonArgs = {
 export type QueryPokemonsArgs = {
   first: Scalars["Int"]["input"];
 };
-
-Hello;

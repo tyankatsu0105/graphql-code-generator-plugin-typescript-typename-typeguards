@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "onchange 'src/**/*.ts' -- npm run build",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "format": "prettier --write ."
   },
   "repository": {
