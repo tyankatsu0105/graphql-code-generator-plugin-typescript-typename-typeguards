@@ -17,7 +17,13 @@
     "type": "git",
     "url": "git+https://github.com/tyankatsu0105/graphql-code-generator-plugin-typescript-typename-typeguards.git"
   },
-  "keywords": [],
+  "keywords": [
+    "graphql",
+    "codegen",
+    "typescript",
+    "user defined type guards",
+    "__typename"
+  ],
   "author": "tyankatsu <frips.ryilsufupe+dev@gmail.com> (https://tyankatsu.com/)",
   "license": "MIT",
   "bugs": {
