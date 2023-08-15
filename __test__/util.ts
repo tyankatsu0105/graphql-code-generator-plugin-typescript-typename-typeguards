@@ -6,62 +6,53 @@ import { expect, it } from "vitest";
 
 import { plugin } from "../src/index";
 
-/**
- * @example
- * import { createPluginTester } from "../../util";
- *
- * describe("plugin", () => {
- *   const { pluginTester } = createPluginTester(__dirname);
- *
- *   pluginTester("aaaaaaaa");
- * });
- */
-export const createPluginTester = (dirname: typeof __dirname) => {
-  const pluginTester = (
-    testcase: string,
-    params?: {
-      filePath?: {
-        /**
-         * @default
-         * schema.graphql
-         * @example
-         * ./path/to/schema.graphql
-         */
-        schema?: string;
-        /**
-         * @default
-         * output.ts
-         * @example
-         * ./path/to/output.ts
-         */
-        output?: string;
-      };
+export const pluginTester = (
+  fixturePath: string,
+  testcase: string,
+  params?: {
+    fileName?: {
       /**
-       * @default []
+       * @default
+       * schema.graphql
+       * @example
+       * input.graphql
        */
-      documents?: Parameters<typeof plugin>[1];
-
+      schema?: string;
       /**
-       * @default {}
+       * @default
+       * output.ts
+       * @example
+       * generated.ts
        */
-      config?: Parameters<typeof plugin>[2];
-    }
-  ) => {
-    it(testcase, () => {
-      const schemaPath = params?.filePath?.schema ?? "schema.graphql";
-      const outputPath = params?.filePath?.output ?? "output.ts";
-      const schema = loadSchemaSync(join(dirname, schemaPath), {
-        loaders: [new GraphQLFileLoader()],
-      });
-      const documents = params?.documents ?? [];
-      const config = params?.config ?? {};
+      output?: string;
+    };
+    /**
+     * @default []
+     */
+    documents?: Parameters<typeof plugin>[1];
 
-      const result = plugin(schema, documents, config);
-      const expected = readFileSync(join(dirname, outputPath), "utf-8");
+    /**
+     * @default {}
+     */
+    config?: Parameters<typeof plugin>[2];
+  }
+) => {
+  it(testcase, () => {
+    const schemaFile = params?.fileName?.schema ?? "schema.graphql";
+    const schemaFilePath = join("__test__/fixtures", fixturePath, schemaFile);
 
-      expect(result).toBe(expected);
+    const outputFile = params?.fileName?.output ?? "output.ts";
+    const outputFilePath = join("__test__/fixtures", fixturePath, outputFile);
+
+    const schema = loadSchemaSync(schemaFilePath, {
+      loaders: [new GraphQLFileLoader()],
     });
-  };
+    const documents = params?.documents ?? [];
+    const config = params?.config ?? {};
 
-  return { pluginTester };
+    const result = plugin(schema, documents, config);
+    const expected = readFileSync(outputFilePath, "utf-8");
+
+    expect(result).toBe(expected);
+  });
 };
