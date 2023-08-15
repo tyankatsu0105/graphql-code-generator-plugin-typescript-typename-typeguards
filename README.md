@@ -74,3 +74,7 @@ export const isAddress = (field: {
   __typename?: "User" | "Address";
 }): field is Address => field.__typename === "Address";
 ```
+
+## License(MIT)
+
+See [LICENSE](./LICENSE)
