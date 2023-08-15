@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A plugin for graphql code generator that generate user defined type guards with __typename",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "NODE_ENV=production vitest",
     "dev": "onchange 'src/**/*.ts' -- npm run build",
