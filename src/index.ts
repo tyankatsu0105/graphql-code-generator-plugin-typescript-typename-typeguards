@@ -1,33 +1,45 @@
 import type { PluginFunction, Types } from "@graphql-codegen/plugin-helpers";
-import { isScalarType } from "graphql";
+import {
+  GraphQLSchema,
+  isIntrospectionType,
+  isScalarType,
+  isSpecifiedScalarType,
+} from "graphql";
 
 import type { TypeScriptPluginConfig } from "./config";
-import { isBuiltInScalar, isDoubleUnderline } from "./utils";
+
+const getUserDefinedTypes = (schema: GraphQLSchema) => {
+  const typeMap = schema.getTypeMap();
+  const allTypeNames = Object.keys(typeMap);
+
+  const userDefinedTypes = allTypeNames.filter((typeName) => {
+    const type = typeMap[typeName];
+    if (!type) return;
+
+    return (
+      !isScalarType(type) &&
+      !isSpecifiedScalarType(type) &&
+      !isIntrospectionType(type)
+    );
+  });
+
+  return { userDefinedTypes };
+};
 
 export const plugin: PluginFunction<
   TypeScriptPluginConfig,
   Types.PluginOutput
 > = (schema) => {
-  const typeMap = schema.getTypeMap();
-  const allTypeNames = Object.keys(typeMap);
+  const { userDefinedTypes } = getUserDefinedTypes(schema);
 
-  const getTypeNames = allTypeNames.filter((typeName) => {
-    const type = typeMap[typeName];
+  const unionTypeName = userDefinedTypes.reduce((acc, typeName) => {
+    if (acc === "") return `'${typeName}'`;
 
-    return (
-      !isScalarType(type) &&
-      !isBuiltInScalar(typeName) &&
-      !isDoubleUnderline(typeName)
-    );
-  });
+    return `${acc} | '${typeName}'`;
+  }, "");
 
-  const unionTypeName = getTypeNames
-    .map((typeName) => `'${typeName}'`)
-    .join(" | ");
-  const result = getTypeNames
+  const result = userDefinedTypes
     .map((typeName) => {
-      console.log({ typeName });
-
       return `export const is${typeName} = (field: { __typename?: ${unionTypeName}; }): field is ${typeName} => field.__typename === '${typeName}';`;
     })
     .filter(Boolean)
