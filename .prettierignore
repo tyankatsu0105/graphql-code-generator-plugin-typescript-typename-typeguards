@@ -1,4 +1,4 @@
-__test__/cases/**/*.*
-!__test__/cases/**/*.test.ts
-!__test__/cases/**/*.graphql
+__test__/fixtures/**/*.*
+!__test__/fixtures/**/*.test.ts
+!__test__/fixtures/**/*.graphql
 dist/

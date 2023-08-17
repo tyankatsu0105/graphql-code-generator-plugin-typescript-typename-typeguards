@@ -108,9 +108,9 @@ export type QueryPokemonsArgs = {
   first: Scalars['Int']['input'];
 };
 
-export const isAttack = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is Attack => field.__typename === 'Attack';
-export const isPokemon = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is Pokemon => field.__typename === 'Pokemon';
-export const isPokemonAttack = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is PokemonAttack => field.__typename === 'PokemonAttack';
-export const isPokemonDimension = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is PokemonDimension => field.__typename === 'PokemonDimension';
-export const isPokemonEvolutionRequirement = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is PokemonEvolutionRequirement => field.__typename === 'PokemonEvolutionRequirement';
-export const isQuery = (field: { __typename?: 'Attack' | 'Pokemon' | 'PokemonAttack' | 'PokemonDimension' | 'PokemonEvolutionRequirement' | 'Query'; }): field is Query => field.__typename === 'Query';
+export const isAttack = (field: { __typename?: string; }): field is Attack => field.__typename === 'Attack';
+export const isPokemon = (field: { __typename?: string; }): field is Pokemon => field.__typename === 'Pokemon';
+export const isPokemonAttack = (field: { __typename?: string; }): field is PokemonAttack => field.__typename === 'PokemonAttack';
+export const isPokemonDimension = (field: { __typename?: string; }): field is PokemonDimension => field.__typename === 'PokemonDimension';
+export const isPokemonEvolutionRequirement = (field: { __typename?: string; }): field is PokemonEvolutionRequirement => field.__typename === 'PokemonEvolutionRequirement';
+export const isQuery = (field: { __typename?: string; }): field is Query => field.__typename === 'Query';

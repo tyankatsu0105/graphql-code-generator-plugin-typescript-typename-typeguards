@@ -66,6 +66,36 @@ type Address {
 ### Output
 
 ```ts
+export const isUser = (field: { __typename?: string }): field is User =>
+  field.__typename === "User";
+
+export const isAddress = (field: { __typename?: string }): field is Address =>
+  field.__typename === "Address";
+```
+
+## Config
+
+### argsAsStringLiteralUnion
+
+If true, the type guard function's args will be generated as a string literal union.
+
+```ts
+const config: CodegenConfig = {
+  generates: {
+    "src/generated/graphql.ts": {
+      plugins: [
+        "typescript",
+        "graphql-code-generator-plugin-typescript-typename-typeguards",
+      ],
+      config: {
+        argsAsStringLiteralUnion: true,
+      },
+    },
+  },
+};
+```
+
+```ts
 export const isUser = (field: {
   __typename?: "User" | "Address";
 }): field is User => field.__typename === "User";

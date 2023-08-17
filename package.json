@@ -32,7 +32,6 @@
   "homepage": "https://github.com/tyankatsu0105/graphql-code-generator-plugin-typescript-typename-typeguards#readme",
   "devDependencies": {
     "@graphql-codegen/plugin-helpers": "5.0.1",
-    "@graphql-codegen/visitor-plugin-common": "4.0.1",
     "@graphql-tools/graphql-file-loader": "8.0.0",
     "@graphql-tools/load": "8.0.0",
     "@types/node": "20.4.10",

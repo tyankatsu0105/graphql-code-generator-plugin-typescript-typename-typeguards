@@ -6,7 +6,7 @@ import {
   isSpecifiedScalarType,
 } from "graphql";
 
-import type { TypeScriptPluginConfig } from "./config";
+import { Config, getConfig } from "./config";
 
 const getUserDefinedTypes = (schema: GraphQLSchema) => {
   const typeMap = schema.getTypeMap();
@@ -26,21 +26,36 @@ const getUserDefinedTypes = (schema: GraphQLSchema) => {
   return { userDefinedTypes };
 };
 
-export const plugin: PluginFunction<
-  TypeScriptPluginConfig,
-  Types.PluginOutput
-> = (schema) => {
-  const { userDefinedTypes } = getUserDefinedTypes(schema);
+const getParameterType = (
+  params: Readonly<{
+    userDefinedTypes: string[];
+    config: Config;
+  }>
+) => {
+  if (!params.config.argsAsStringLiteralUnion) return "string";
 
-  const unionTypeName = userDefinedTypes.reduce((acc, typeName) => {
+  const unionTypeName = params.userDefinedTypes.reduce((acc, typeName) => {
     if (acc === "") return `'${typeName}'`;
 
     return `${acc} | '${typeName}'`;
   }, "");
 
+  return unionTypeName;
+};
+
+export const plugin: PluginFunction<Config, Types.PluginOutput> = (
+  schema,
+  _,
+  userDefinedConfig
+) => {
+  const config = getConfig(userDefinedConfig);
+  const { userDefinedTypes } = getUserDefinedTypes(schema);
+
+  const parameterType = getParameterType({ config, userDefinedTypes });
+
   const result = userDefinedTypes
     .map((typeName) => {
-      return `export const is${typeName} = (field: { __typename?: ${unionTypeName}; }): field is ${typeName} => field.__typename === '${typeName}';`;
+      return `export const is${typeName} = (field: { __typename?: ${parameterType}; }): field is ${typeName} => field.__typename === '${typeName}';`;
     })
     .filter(Boolean)
     .join("\n");
