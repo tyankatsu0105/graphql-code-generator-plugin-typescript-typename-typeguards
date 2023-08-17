@@ -1,6 +1,6 @@
 {
   "name": "graphql-code-generator-plugin-typescript-typename-typeguards",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A plugin for graphql code generator that generate user defined type guards with __typename",
   "main": "dist/index.js",
   "files": [
